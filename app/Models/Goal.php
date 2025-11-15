@@ -9,6 +9,18 @@ class Goal extends Model
 {
     use HasFactory;
 
-    // MASS CREATE
+    // RELATIONSHIPS
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function game()
+    {
+        return $this->belongsTo(Game::class);
+    }
+
+    // ENABLE MASS ASSIGNMENT
     protected $fillable = ['game_id', 'user_id', 'goal_text', 'completed'];
 }
