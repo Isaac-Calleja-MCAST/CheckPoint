@@ -1,5 +1,9 @@
-<h1>Create a New Guide</h1>
+@extends('layouts.main')
 
-<p>This page will be used to create a new guide for a game.</p>
+@section('content')
+    <h1>Create a New Guide</h1>
 
-<a href="{{ route('guides.index') }}">Back to Guides List</a>
+    <p>This page will be used to create a new guide for a game.</p>
+
+    <a href="{{ route('guides.index') }}">Back to Guides List</a>
+@endsection

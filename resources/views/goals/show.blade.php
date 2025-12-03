@@ -1,5 +1,9 @@
-<h1>Goal Details</h1>
+@extends('layouts.main')
 
-<p>Details of the selected goal will appear here.</p>
+@section('content')
+    <h1>Goal Details</h1>
 
-<a href="{{ route('goals.index') }}">Back to Goals List</a>
+    <p>Details of the selected goal will appear here.</p>
+
+    <a href="{{ route('goals.index') }}">Back to Goals List</a>
+@endsection

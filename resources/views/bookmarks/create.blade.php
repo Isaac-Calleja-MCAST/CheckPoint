@@ -1,5 +1,9 @@
-<h1>Create a New Bookmark</h1>
+@extends('layouts.main')
 
-<p>This page will be used to create a new bookmark for a game.</p>
+@section('content')
+    <h1>Create a New Bookmark</h1>
 
-<a href="{{ route('bookmarks.index') }}">Back to Bookmarks List</a>
+    <p>This page will be used to create a new bookmark for a game.</p>
+
+    <a href="{{ route('bookmarks.index') }}">Back to Bookmarks List</a>
+@endsection

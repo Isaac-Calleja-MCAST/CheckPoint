@@ -8,19 +8,41 @@ use App\Models\Game;
 class GameController extends Controller
 {
     // Show all games
-    public function index() {
+    public function index()
+    {
         $games = Game::all();
         return view('games.index', compact('games'));
     }
 
     // Show form to create a new game
-    public function create() {
+    public function create()
+    {
         return view('games.create');
     }
 
     // Show details of a specific game
-    public function show($id) {
+    public function show($id)
+    {
         $game = Game::find($id);
         return view('games.show', compact('game'));
+    }
+
+    // Search for games by title
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        // If user submitted an empty search (NULL or ""), return no results.
+        if (!$request->filled('query')) {
+            return view('games.search_results', [
+                'games' => collect(),
+                'query' => '',
+            ]);
+        }
+
+        // Search games 
+        $games = Game::where('title', 'LIKE', "%{$query}%")->get();
+
+        return view('games.search_results', compact('games', 'query'));
     }
 }

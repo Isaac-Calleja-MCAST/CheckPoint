@@ -1,5 +1,9 @@
-<h1>Guide Details</h1>
+@extends('layouts.main')
 
-<p>Details of the selected guide will appear here.</p>
+@section('content')
+    <h1>Guide Details</h1>
 
-<a href="{{ route('guides.index') }}">Back to Guides List</a>
+    <p>Details of the selected guide will appear here.</p>
+
+    <a href="{{ route('guides.index') }}">Back to Guides List</a>
+@endsection
