@@ -1,5 +1,9 @@
-<h1>All Reviews</h1>
+@extends('layouts.main')
 
-<p>List of all game reviews.</p>
+@section('content')
+    <h1>All Reviews</h1>
 
-<a href="{{ route('reviews.create') }}">Create New Review</a>
+    <p>List of all game reviews.</p>
+
+    <a href="{{ route('reviews.create') }}">Create New Review</a>
+@endsection

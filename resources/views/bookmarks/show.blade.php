@@ -1,5 +1,9 @@
-<h1>Bookmark Details</h1>
+@extends('layouts.main')
 
-<p>Details of the selected bookmark will appear here.</p>
+@section('content')
+    <h1>Bookmark Details</h1>
 
-<a href="{{ route('bookmarks.index') }}">Back to Bookmarks List</a>
+    <p>Details of the selected bookmark will appear here.</p>
+
+    <a href="{{ route('bookmarks.index') }}">Back to Bookmarks List</a>
+@endsection

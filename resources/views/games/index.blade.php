@@ -1,7 +1,9 @@
-<!-- resources/views/games/index.blade.php -->
+@extends('layouts.main')
 
-<h1>Games List</h1>
+@section('content')
+    <h1>Games List</h1>
 
-<p>This page will display all games.</p>
+    <p>This page will display all games.</p>
 
-<a href="{{ route('games.create') }}">Create New Game</a>
+    <a href="{{ route('games.create') }}">Create New Game</a>
+@endsection

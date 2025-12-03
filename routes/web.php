@@ -18,9 +18,11 @@ use App\Http\Controllers\BookmarkController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route for Home
+Route::get('/', function () {return view('welcome');})->name('home');
+
+// Route for Unique Feature [Search Games by Title]
+Route::get('/games/search', [GameController::class, 'search'])->name('games.search');
 
 // Routes for Games
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
