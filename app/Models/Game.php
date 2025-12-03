@@ -35,6 +35,6 @@ class Game extends Model
     }
 
     // ENABLE MASS ASSIGNMENT
-    protected $fillable = ['title', 'platform', 'playtime', 'coverimage_path', 'user_id', 'started_on', 'completed_on','release_year'];
+    protected $fillable = ['title', 'platform', 'playtime', 'coverimage_path', 'user_id', 'started_on', 'completed_on','release_year', 'genre'];
 
 }

@@ -8,11 +8,29 @@ use App\Models\Game;
 class GameController extends Controller
 {
     // Show all games
-    public function index()
+    public function index(Request $request)
     {
-        $games = Game::all();
-        return view('games.index', compact('games'));
+        // Allowed sort columns
+        $sortable = ['title', 'platform', 'playtime', 'release_year', 'genre'];
+
+        // Selected column (default: title)
+        $sortColumn = $request->get('sort_column', 'title');
+        if (!in_array($sortColumn, $sortable)) {
+            $sortColumn = 'title'; // safety fallback
+        }
+
+        // Direction (default: asc)
+        $sortDirection = $request->get('sort_direction', 'asc');
+        if (!in_array($sortDirection, ['asc', 'desc'])) {
+            $sortDirection = 'asc';
+        }
+
+        // Query
+        $games = Game::orderBy($sortColumn, $sortDirection)->paginate(10);
+
+        return view('games.index', compact('games', 'sortColumn', 'sortDirection', 'sortable'));
     }
+
 
     // Show form to create a new game
     public function create()
