@@ -97,7 +97,8 @@
 
         </div>
     </div>
-
+    <!-- BACK BUTTON -->
+    <a href="{{ route('games.index') }}" class="btn btn-outline-secondary mt-3">← Back to Games</a>
     </div>
 
 @endsection
