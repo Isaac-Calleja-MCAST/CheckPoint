@@ -22,6 +22,6 @@ class Bookmark extends Model
     }
 
     // ENABLE MASS ASSIGNMENT
-    protected $fillable = ['game_id', 'user_id', 'bookmark_text'];
+    protected $fillable = ['game_id', 'user_id', 'bookmark_text','name'];
 }
 
