@@ -47,7 +47,9 @@
         <p class="text-muted">No bookmarks found.</p>
     @else
         @foreach ($bookmarks as $bookmark)
-            <div class="card mb-3 shadow-sm">
+            <div class="card mb-3 shadow-sm position-relative">
+                <a href="{{ route('bookmarks.show', $bookmark->id) }}" class="stretched-link"></a>
+
                 <div class="row g-0 align-items-center">
 
                     <!-- COVER IMAGE -->
@@ -56,9 +58,7 @@
                             @if ($bookmark->game && $bookmark->game->coverimage_path)
                                 <img src="{{ asset($bookmark->game->coverimage_path) }}" class="img-fluid w-100 h-100 object-fit-cover">
                             @else
-                                <div class="d-flex justify-content-center align-items-center h-100 text-muted small">
-                                    No Image
-                                </div>
+                                <div class="d-flex justify-content-center align-items-center h-100 text-muted small">No Image</div>
                             @endif
                         </div>
                     </div>
@@ -66,12 +66,9 @@
                     <!-- MAIN CONTENT -->
                     <div class="col-md-7 d-flex align-items-center">
                         <div class="p-3">
-                            <a href="{{ route('bookmarks.show', $bookmark->id) }}" class="text-decoration-none text-dark">
-                                <h5 class="mb-1 fw-bold">
-                                    {{ $bookmark->game->title ?? 'Unknown Game' }}
-                                    – {{ $bookmark->name ?? 'Untitled Bookmark' }}
-                                </h5>
-                            </a>
+                            <h5 class="mb-1 fw-bold">
+                                {{ $bookmark->game->title ?? 'Unknown Game' }} – {{ $bookmark->name ?? 'Untitled Bookmark' }}
+                            </h5>
 
                             <p class="text-muted mb-1 small">
                                 Platform: {{ $bookmark->game->platform ?? 'Unknown' }}
@@ -84,14 +81,16 @@
                         </div>
                     </div>
 
-                    <!-- ACTION BUTTONS -->
+                    <!-- ACTION BUTTONS (disabled for now) -->
                     <div class="col-md-3 d-flex flex-column align-items-end px-3">
                         <a class="btn btn-outline-primary btn-sm mb-1 disabled">Edit</a>
                         <button class="btn btn-outline-danger btn-sm disabled">Delete</button>
                     </div>
+
                 </div>
             </div>
         @endforeach
+
     @endif
 
 @endsection

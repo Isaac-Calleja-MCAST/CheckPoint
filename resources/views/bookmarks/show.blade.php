@@ -8,7 +8,7 @@
 
             <!-- COVER IMAGE -->
             <div class="col-md-3 d-flex justify-content-center">
-                <div class="border rounded" style="width: 200px; height: 260px; overflow: hidden;">
+                <div class="border rounded" style="width: 240px; height: 320px; overflow: hidden;">
                     @if ($bookmark->game && $bookmark->game->coverimage_path)
                         <img src="{{ asset($bookmark->game->coverimage_path) }}" alt="Game Cover"
                             class="img-fluid w-100 h-100 object-fit-cover">
@@ -21,7 +21,7 @@
             </div>
 
             <!-- TEXT CONTENT -->
-            <div class="col-md-9">
+            <div class="col-md-6">
 
                 <h3 class="fw-bold mb-1">
                     {{ $bookmark->game->title ?? 'Unknown Game' }}
@@ -33,9 +33,7 @@
 
                 <hr>
 
-                <h4 class="fw-bold mt-3 mb-2">
-                    {{ $bookmark->name ?? 'Untitled Bookmark' }}
-                </h4>
+                <h4 class="fw-bold mt-3 mb-2">{{ $bookmark->name ?? 'Untitled Bookmark' }}</h4>
 
                 <p class="mb-4" style="white-space: pre-line;">
                     {{ $bookmark->bookmark_text ?? 'No notes for this bookmark.' }}
@@ -51,10 +49,16 @@
                 </p>
 
             </div>
+
+            <!-- DISABLED ACTION BUTTONS -->
+            <div class="col-md-3 d-flex flex-column align-items-end">
+                <a class="btn btn-outline-primary btn-sm mb-2 disabled">Edit</a>
+                <button class="btn btn-outline-danger btn-sm disabled">Delete</button>
+            </div>
+
         </div>
     </div>
 
-    <!-- BACK BUTTON -->
     <a href="{{ route('bookmarks.index') }}" class="btn btn-outline-secondary mt-3">← Back to Bookmarks</a>
 
 @endsection
