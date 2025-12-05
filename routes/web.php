@@ -28,7 +28,7 @@ Route::get('/games/search', [GameController::class, 'search'])->name('games.sear
 Route::get('/games', [GameController::class, 'index'])->name('games.index');
 Route::get('/games/create', [GameController::class, 'create'])->name('games.create');
 Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
-
+Route::post('/games', [GameController::class, 'store'])->name('games.store');
 // Routes for Reviews
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
