@@ -21,8 +21,7 @@
             <!-- GOAL TEXT -->
             <div class="mb-3">
                 <label class="form-label fw-bold">Goal</label>
-                <textarea class="form-control" rows="3"
-                          placeholder="Write your goal here..." disabled></textarea>
+                <textarea class="form-control" rows="3" placeholder="Write your goal here..." disabled></textarea>
             </div>
 
             <hr>
