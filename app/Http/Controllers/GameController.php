@@ -34,8 +34,9 @@ class GameController extends Controller
 
     // Show form to create a new game
     public function create()
-    {
-        return view('games.create');
+    {   
+        $game = new Game();
+        return view('games.create', compact('game'));
     }
 
     // Show details of a specific game
@@ -79,7 +80,7 @@ class GameController extends Controller
             'platform' => 'required|string|max:255',
             'release_year' => 'nullable|integer',
             'genre' => 'nullable|string|max:255',
-            'playtime' => 'nullable|integer',
+            'playtime' => 'nullable|numeric',
             'started_on' => 'nullable|date',
             'completed_on' => 'nullable|date',
             'coverimage_path' => 'nullable|string|max:255',
@@ -92,5 +93,33 @@ class GameController extends Controller
 
         return redirect()->route('games.index')
             ->with('message', 'Game created successfully.');
+    }
+
+    public function edit($id)
+    {
+        $game = Game::find($id);
+        return view('games.edit', compact('game'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'platform' => 'required|string|max:255',
+            'release_year' => 'nullable|integer',
+            'genre' => 'nullable|string|max:255',
+            'playtime' => 'nullable|numeric',
+            'started_on' => 'nullable|date',
+            'completed_on' => 'nullable|date',
+            'coverimage_path' => 'nullable|string|max:255',
+        ]);
+
+        $validated['user_id'] = 1;
+
+        $game = Game::find($id);
+        $game->update($validated);
+
+        return redirect()->route('games.index')
+            ->with('message', 'Game updated successfully.');
     }
 }
