@@ -64,10 +64,13 @@
                         </a>
 
 
-                        <!-- Delete (not functional yet) -->
-                        <button class="btn btn-outline-danger" disabled>
+                        <!-- Delete -->
+                        <a href="{{ route('games.destroy', ['id' => $game->id]) }}"
+                            class="btn-delete btn btn-outline-danger">
                             Delete
-                        </button>
+                        </a>
+
+
 
                         <!-- Add Bookmark -->
                         <a href="{{ route('bookmarks.create', ['game_id' => $game->id]) }}" class="btn btn-secondary">
@@ -101,5 +104,10 @@
     <!-- BACK BUTTON -->
     <a href="{{ route('games.index') }}" class="btn btn-outline-secondary mt-3">← Back to Games</a>
     </div>
+
+    <form id="form-delete" method="POST" style="display:none;">
+        @csrf
+        @method('DELETE')
+    </form>
 
 @endsection
