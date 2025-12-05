@@ -64,4 +64,55 @@ class BookmarkController extends Controller
         return view('bookmarks.show', compact('bookmark'));
     }
 
+    // Store a new bookmark
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'game_id' => 'required|exists:games,id',
+            'name' => 'nullable|string|max:255',
+            'bookmark_text' => 'nullable|string',
+        ]);
+
+        $validated['user_id'] = 1; // For simplicity, assign to user ID 1
+
+        Bookmark::create($validated);
+
+        return redirect()->route('bookmarks.index')
+            ->with('message', 'Bookmark created successfully.');
+    }
+    public function edit($id)
+    {
+        $bookmark = Bookmark::findOrFail($id);
+        $games = Game::orderBy('title')->get();
+
+        return view('bookmarks.edit', compact('bookmark', 'games'));
+    }
+
+    // Update an existing bookmark
+    public function update(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'game_id' => 'required|exists:games,id',
+            'name' => 'nullable|string|max:255',
+            'bookmark_text' => 'nullable|string',
+        ]);
+
+        $validated['user_id'] = 1; // keep consistent with create
+
+        $bookmark = Bookmark::findOrFail($id);
+        $bookmark->update($validated);
+
+        return redirect()->route('bookmarks.index')
+            ->with('message', 'Bookmark updated successfully.');
+    }
+
+    // Delete a bookmark
+    public function destroy($id)
+    {
+        $bookmark = Bookmark::findOrFail($id);
+        $bookmark->delete();
+
+        return redirect()->route('bookmarks.index')
+            ->with('message', 'Bookmark deleted successfully.');
+    }
 }
