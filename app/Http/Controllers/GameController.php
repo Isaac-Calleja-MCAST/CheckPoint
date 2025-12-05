@@ -122,4 +122,13 @@ class GameController extends Controller
         return redirect()->route('games.index')
             ->with('message', 'Game updated successfully.');
     }
+
+    public function destroy($id)
+    {
+        $game = Game::find($id);
+        $game->delete();
+
+        return redirect()->route('games.index')
+            ->with('message', 'Game deleted successfully.');
+    }
 }

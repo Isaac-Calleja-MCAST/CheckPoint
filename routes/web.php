@@ -31,6 +31,7 @@ Route::get('/games/{id}', [GameController::class, 'show'])->name('games.show');
 Route::post('/games', [GameController::class, 'store'])->name('games.store');
 Route::get('/games/{id}/edit', [GameController::class, 'edit'])->name('games.edit');
 Route::put('/games/{id}', [GameController::class, 'update'])->name('games.update');
+Route::delete('/games/{id}', [GameController::class, 'destroy'])->name('games.destroy');
 // Routes for Reviews
 Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
 Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
