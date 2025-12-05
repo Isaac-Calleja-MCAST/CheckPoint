@@ -58,10 +58,11 @@
 
                     <div class="d-flex flex-wrap gap-2">
 
-                        <!-- Edit (not functional yet) -->
-                        <button class="btn btn-outline-primary" disabled>
+                        <!-- Edit -->
+                        <a href="{{ route('games.edit', ['id' => $game->id]) }}" class="btn btn-outline-primary">
                             Edit
-                        </button>
+                        </a>
+
 
                         <!-- Delete (not functional yet) -->
                         <button class="btn btn-outline-danger" disabled>
