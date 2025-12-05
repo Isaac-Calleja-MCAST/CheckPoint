@@ -72,4 +72,25 @@ class GameController extends Controller
         return view('games.search_results', compact('games', 'query'));
     }
 
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'platform' => 'required|string|max:255',
+            'release_year' => 'nullable|integer',
+            'genre' => 'nullable|string|max:255',
+            'playtime' => 'nullable|integer',
+            'started_on' => 'nullable|date',
+            'completed_on' => 'nullable|date',
+            'coverimage_path' => 'nullable|string|max:255',
+        ]);
+
+        // For simplicity, assigned user_id 1
+        $validated['user_id'] = 1;
+
+        Game::create($validated);
+
+        return redirect()->route('games.index')
+            ->with('message', 'Game created successfully.');
+    }
 }
