@@ -66,7 +66,7 @@
 
                         <!-- Delete -->
                         <a href="{{ route('games.destroy', ['id' => $game->id]) }}"
-                            class="btn-delete btn btn-outline-danger">
+                            class="btn-delete btn btn-outline-danger" data-type="game">
                             Delete
                         </a>
 
