@@ -48,19 +48,28 @@ class GameController extends Controller
     // Search for games by title
     public function search(Request $request)
     {
-        $query = $request->input('query');
+        $query = trim($request->input('query'));
 
-        // If user submitted an empty search (NULL or ""), return no results.
-        if (!$request->filled('query')) {
+        // If empty input, return empty results
+        if ($query === '') {
             return view('games.search_results', [
                 'games' => collect(),
                 'query' => '',
             ]);
         }
 
-        // Search games 
-        $games = Game::where('title', 'LIKE', "%{$query}%")->get();
+        // Normalize for accuracy
+        $normalized = strtolower($query);
+
+        $games = Game::whereRaw('LOWER(title) LIKE ?', ["%{$normalized}%"])
+            ->orderByRaw("CASE 
+            WHEN LOWER(title) = ? THEN 0
+            WHEN LOWER(title) LIKE ? THEN 1
+            ELSE 2
+        END", [$normalized, "$normalized%"])
+            ->get();
 
         return view('games.search_results', compact('games', 'query'));
     }
+
 }

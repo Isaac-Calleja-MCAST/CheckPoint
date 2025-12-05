@@ -15,16 +15,16 @@ class BookmarkController extends Controller
         $sortable = ['game_title', 'game_platform', 'created_at', 'updated_at'];
 
         // Get sort parameters from request
-        $sort = $request->get('sort', 'created_at');
-        $direction = $request->get('direction', 'asc');
+        $sort = $request->get('sort', 'updated_at');
+        $direction = $request->get('direction', 'desc');
 
         // Validate input
         if (!in_array($sort, $sortable)) {
-            $sort = 'created_at';
+            $sort = 'updated_at';
         }
 
         if (!in_array($direction, ['asc', 'desc'])) {
-            $direction = 'asc';
+            $direction = 'desc';
         }
 
         // Build query
