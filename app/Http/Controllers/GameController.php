@@ -26,7 +26,7 @@ class GameController extends Controller
         }
 
         // Query
-        $games = Game::orderBy($sortColumn, $sortDirection)->paginate(10);
+        $games = Game::orderBy($sortColumn, $sortDirection)->get();
 
         return view('games.index', compact('games', 'sortColumn', 'sortDirection', 'sortable'));
     }
