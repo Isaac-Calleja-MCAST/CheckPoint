@@ -13,28 +13,50 @@ class GameController extends Controller
         // Allowed sort columns
         $sortable = ['title', 'platform', 'playtime', 'release_year', 'genre'];
 
-        // Selected column (default: title)
+        // Selected sort column
         $sortColumn = $request->get('sort_column', 'title');
         if (!in_array($sortColumn, $sortable)) {
-            $sortColumn = 'title'; // safety fallback
+            $sortColumn = 'title';
         }
 
-        // Direction (default: asc)
+        // Sort direction
         $sortDirection = $request->get('sort_direction', 'asc');
         if (!in_array($sortDirection, ['asc', 'desc'])) {
             $sortDirection = 'asc';
         }
 
-        // Query
-        $games = Game::orderBy($sortColumn, $sortDirection)->paginate(10);
+        // Start query
+        $query = Game::query();
 
-        return view('games.index', compact('games', 'sortColumn', 'sortDirection', 'sortable'));
+        // FILTER: Platform
+        if ($request->filled('platform')) {
+            $query->where('platform', $request->platform);
+        }
+
+        // FILTER: Genre
+        if ($request->filled('genre')) {
+            $query->where('genre', $request->genre);
+        }
+
+        // FILTER: Release Year
+        if ($request->filled('release_year')) {
+            $query->where('release_year', $request->release_year);
+        }
+
+        // Apply sorting to the filtered query
+        $games = $query->orderBy($sortColumn, $sortDirection)->get();
+
+        // For dropdowns
+        $platforms = Game::select('platform')->distinct()->pluck('platform');
+        $genres = Game::select('genre')->distinct()->pluck('genre');
+        $years = Game::select('release_year')->distinct()->pluck('release_year');
+
+        return view('games.index', compact('games', 'sortColumn', 'sortDirection', 'sortable', 'platforms', 'genres', 'years'));
     }
-
 
     // Show form to create a new game
     public function create()
-    {   
+    {
         $game = new Game();
         return view('games.create', compact('game'));
     }

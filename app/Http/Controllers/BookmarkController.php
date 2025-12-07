@@ -27,9 +27,21 @@ class BookmarkController extends Controller
             $direction = 'desc';
         }
 
-        // Build query
+        // Build base query
         $bookmarks = Bookmark::with('game');
 
+        // ----- FILTERING -----
+        if ($request->filled('game_id')) {
+            $bookmarks = $bookmarks->where('game_id', $request->get('game_id'));
+        }
+
+        if ($request->filled('platform')) {
+            $bookmarks = $bookmarks->whereHas('game', function ($q) use ($request) {
+                $q->where('platform', $request->get('platform'));
+            });
+        }
+
+        // ----- SORTING -----
         if ($sort === 'game_title') {
             $bookmarks = $bookmarks->join('games', 'games.id', '=', 'bookmarks.game_id')
                 ->orderBy('games.title', $direction)
@@ -42,12 +54,17 @@ class BookmarkController extends Controller
             $bookmarks = $bookmarks->orderBy("bookmarks.$sort", $direction);
         }
 
+        // Fetch results
         $bookmarks = $bookmarks->get();
 
-        return view('bookmarks.index', compact('bookmarks', 'sort', 'direction', 'sortable'));
+        // ----- DROPDOWN DATA -----
+        $games = Game::orderBy('title')->get(); // for Game dropdown
+        $platforms = Game::select('platform')->distinct()->orderBy('platform')->pluck('platform'); // for Platform dropdown
+
+        // Return view
+        return view('bookmarks.index', compact('bookmarks', 'sort', 'direction', 'sortable', 'games', 'platforms'));
     }
-
-
+    
     // Show form to create a new bookmark
     public function create()
     {
