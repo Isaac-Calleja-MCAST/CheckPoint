@@ -101,6 +101,67 @@
 
         </div>
     </div>
+
+    {{-- ▼▼ RAWG API SECTION — START ▼▼ --}}
+    @if ($apiInfo)
+        <div class="card shadow-sm p-4 mt-4">
+            <h4 class="fw-bold mb-3">Additional Information</h4>
+
+            {{-- Background Image --}}
+            @if (!empty($apiInfo['background_image']))
+                <div class="mb-3">
+                    <img src="{{ $apiInfo['background_image'] }}" class="img-fluid rounded shadow">
+                </div>
+            @endif
+
+            {{-- About / Description --}}
+            @if (!empty($apiInfo['about']))
+                <h5 class="fw-bold mt-4">About</h5>
+                <p>{{ $apiInfo['about'] }}</p>
+            @endif
+
+            {{-- Screenshots --}}
+            @if (!empty($apiInfo['screenshots']))
+                <h5 class="fw-bold mt-4">Screenshots</h5>
+                <div class="d-flex flex-wrap gap-3">
+                    @foreach ($apiInfo['screenshots'] as $shot)
+                        <img src="{{ $shot['image'] }}" width="240" class="rounded shadow">
+                    @endforeach
+                </div>
+            @endif
+
+            {{-- Developers --}}
+            @if (!empty($apiInfo['developers']))
+                <h5 class="fw-bold mt-4">Developers</h5>
+                <p>
+                    @foreach ($apiInfo['developers'] as $dev)
+                        <span class="badge bg-secondary">{{ $dev['name'] }}</span>
+                    @endforeach
+                </p>
+            @endif
+
+            {{-- Publishers --}}
+            @if (!empty($apiInfo['publishers']))
+                <h5 class="fw-bold mt-4">Publishers</h5>
+                <p>
+                    @foreach ($apiInfo['publishers'] as $pub)
+                        <span class="badge bg-secondary">{{ $pub['name'] }}</span>
+                    @endforeach
+                </p>
+            @endif
+
+            {{-- Metacritic --}}
+            @if (!empty($apiInfo['metacritic']))
+                <p class="mt-3">
+                    <strong>Metacritic Score:</strong> {{ $apiInfo['metacritic'] }}
+                </p>
+            @endif
+        </div>
+    @else
+        <p class="text-muted mt-4">RAWG data not available for this game.</p>
+    @endif
+    {{-- ▲▲ RAWG API SECTION — END ▲▲ --}}
+
     <!-- BACK BUTTON -->
     <a href="{{ route('games.index') }}" class="btn btn-outline-secondary mt-3">← Back to Games</a>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Game;
+use Illuminate\Support\Facades\Http;
 
 class GameController extends Controller
 {
@@ -65,8 +66,12 @@ class GameController extends Controller
     public function show($id)
     {
         $game = Game::find($id);
-        return view('games.show', compact('game'));
+
+        $apiInfo = $this->searchRawgGame($game->title);
+
+        return view('games.show', compact('game', 'apiInfo'));
     }
+
 
     // Search for games by title
     public function search(Request $request)
@@ -153,4 +158,84 @@ class GameController extends Controller
         return redirect()->route('games.index')
             ->with('message', 'Game deleted successfully.');
     }
+
+    private function searchRawgGame($title)
+    {
+        $apiKey = config('services.rawg.key');
+        $baseUrl = "https://api.rawg.io/api/games";
+
+        $clean = strtolower(trim($title));
+
+        $attempts = [
+            $clean,
+            preg_replace('/[^a-z0-9 ]/', '', $clean),
+            preg_replace('/\b(x|v|i{1,3}|ii|iii|iv|vi|vii|viii|ix)\b/i', '', $clean),
+        ];
+
+        foreach ($attempts as $attempt) {
+
+            // 1) SEARCH
+            $response = Http::withHeaders([
+                'User-Agent' => 'Laravel App'
+            ])->get($baseUrl, [
+                        'key' => $apiKey,
+                        'search' => $attempt,
+                    ]);
+
+            if (!($response->ok() && isset($response['results']) && count($response['results']) > 0)) {
+                continue;
+            }
+
+            $best = null;
+            $bestScore = 0;
+
+            foreach ($response['results'] as $result) {
+                similar_text(strtolower($result['name']), $clean, $score);
+                if ($score > $bestScore) {
+                    $bestScore = $score;
+                    $best = $result;
+                }
+            }
+
+            if (!$best || $bestScore < 40) {
+                continue;
+            }
+
+            // 2) DETAILS
+            $details = Http::withHeaders([
+                'User-Agent' => 'Laravel App'
+            ])->get("$baseUrl/{$best['id']}", [
+                        'key' => $apiKey,
+                    ]);
+
+            if (!$details->ok()) {
+                continue;
+            }
+
+            $details = $details->json();
+
+            // 3) SCREENSHOTS
+            $shotsResp = Http::withHeaders([
+                'User-Agent' => 'Laravel App'
+            ])->get("$baseUrl/{$best['id']}/screenshots", [
+                        'key' => $apiKey,
+                    ]);
+
+            $screenshots = $shotsResp->ok() ? ($shotsResp['results'] ?? []) : [];
+
+            // Return compiled info
+            return [
+                'background_image' => $details['background_image'] ?? null,
+                'about' => $details['description_raw'] ?? null,
+                'screenshots' => $screenshots,
+                'developers' => $details['developers'] ?? [],
+                'publishers' => $details['publishers'] ?? [],
+                'metacritic' => $details['metacritic'] ?? null,
+            ];
+        }
+
+        return null;
+    }
+
+
 }
