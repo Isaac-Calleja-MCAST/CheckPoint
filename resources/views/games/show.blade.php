@@ -73,22 +73,22 @@
 
 
                         <!-- Add Bookmark -->
-                        <a href="{{ route('bookmarks.create', ['game_id' => $game->id]) }}" class="btn btn-secondary">
+                        <a href="{{ route('bookmarks.create', ['game_id' => $game->id]) }}" class="btn btn-primary">
                             Add Bookmark
                         </a>
 
                         <!-- Add Review -->
-                        <a href="{{ route('reviews.create', ['game_id' => $game->id]) }}" class="btn btn-secondary">
+                        <a href="{{ route('reviews.create', ['game_id' => $game->id]) }}" class="btn btn-primary">
                             Add Review
                         </a>
 
                         <!-- Add Guide -->
-                        <a href="{{ route('guides.create', ['game_id' => $game->id]) }}" class="btn btn-secondary">
+                        <a href="{{ route('guides.create', ['game_id' => $game->id]) }}" class="btn btn-primary">
                             Add Guide
                         </a>
 
                         <!-- Add Goal -->
-                        <a href="{{ route('goals.create', ['game_id' => $game->id]) }}" class="btn btn-secondary">
+                        <a href="{{ route('goals.create', ['game_id' => $game->id]) }}" class="btn btn-primary">
                             Add Goal
                         </a>
 

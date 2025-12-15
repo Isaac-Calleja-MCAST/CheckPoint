@@ -107,10 +107,10 @@ class GameController extends Controller
             'platform' => 'required|string|max:255',
             'release_year' => 'nullable|integer',
             'genre' => 'nullable|string|max:255',
-            'playtime' => 'nullable|numeric',
+            'playtime' => 'required|numeric',
             'started_on' => 'nullable|date',
             'completed_on' => 'nullable|date',
-            'coverimage_path' => 'nullable|string|max:255',
+            'coverimage_path' => 'required|string|max:255',
         ]);
 
         // For simplicity, assigned user_id 1
