@@ -35,8 +35,11 @@
 <!-- PLAYTIME -->
 <div class="mb-3">
     <label class="form-label fw-bold">Playtime (hours)</label>
-    <input type="number" name="playtime" class="form-control" placeholder="e.g. 42"
-        value="{{ old('playtime', $game->playtime) }}">
+    <input type="number" name="playtime" class="form-control @error('playtime') is-invalid @enderror" 
+    placeholder="e.g. 42" value="{{ old('playtime', $game->playtime) }}">
+    @error('playtime')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
 
 <!-- START DATE -->
@@ -54,8 +57,11 @@
 <!-- COVER IMAGE PATH -->
 <div class="mb-3">
     <label class="form-label fw-bold">Cover Image Path</label>
-    <input type="text" name="coverimage_path" class="form-control" placeholder="covers/DARKSOULSREMASTERED.jpg"
-        value="{{ old('coverimage_path', $game->coverimage_path) }}">
+    <input type="text" name="coverimage_path" class="form-control @error('coverimage_path') is-invalid @enderror"
+    placeholder="covers/DARKSOULSREMASTERED.jpg" value="{{ old('coverimage_path', $game->coverimage_path) }}">
+    @error('coverimage_path')
+        <div class="invalid-feedback">{{ $message }}</div>
+    @enderror
 </div>
 
 <hr>
