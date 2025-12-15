@@ -86,8 +86,8 @@ class BookmarkController extends Controller
     {
         $validated = $request->validate([
             'game_id' => 'required|exists:games,id',
-            'name' => 'nullable|string|max:255',
-            'bookmark_text' => 'nullable|string',
+            'name' => 'required|string|max:255',
+            'bookmark_text' => 'required|string',
         ]);
 
         $validated['user_id'] = 1; // For simplicity, assign to user ID 1
