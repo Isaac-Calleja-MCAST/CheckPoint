@@ -71,8 +71,7 @@ class GameController extends Controller
 
         return view('games.show', compact('game', 'apiInfo'));
     }
-
-
+    
     // Search for games by title
     public function search(Request $request)
     {

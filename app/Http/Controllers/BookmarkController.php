@@ -22,7 +22,7 @@ class BookmarkController extends Controller
         if (!in_array($sort, $sortable)) {
             $sort = 'updated_at';
         }
-
+        // Validate direction
         if (!in_array($direction, ['asc', 'desc'])) {
             $direction = 'desc';
         }
