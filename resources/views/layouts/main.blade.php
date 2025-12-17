@@ -57,7 +57,7 @@
                 </form>
 
                 <a href="{{ route('games.create') }}" class="btn btn-primary">
-                    Log a Game
+                    Add a Game
                 </a>
 
             </div>
